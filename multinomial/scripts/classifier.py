@@ -22,6 +22,17 @@ def get_data_set():
       df=pd.read_csv('Dataset_final.csv')
       return df
 
+def get_input_from_pdf():
+    path=input('Enter the Path for pdf: ')
+    doc=fitz.open(path)
+    page=doc[0]
+    text=page.get_text()
+    translator = str.maketrans('', '', string.punctuation)
+    nopunc = text.translate(translator)
+    words = [word for word in nopunc.split() if word.lower() not in stopwords.words('english')]
+    words=' '.join(words)
+    return words
+
 if __name__=='__main__':
       print('Document Classifier')
       dataset=get_data_set()
